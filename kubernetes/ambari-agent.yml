@@ -22,10 +22,10 @@ spec:
           privileged: true
         resources:
           requests:
-            memory: "16G"
+            memory: "8G"
             cpu: "2000m"
           limits:
-            memory: "20G"
+            memory: "8G"
             cpu: "3000m"
         volumeMounts:
             - name: ambari-conf

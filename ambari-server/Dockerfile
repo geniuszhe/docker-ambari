@@ -8,7 +8,7 @@ ADD ambari.repo /etc/yum.repos.d/
 RUN yum install -y ambari-server && yum clean all
 
 # add ambari shell to the image so new users don't need the 1GB java image
-RUN curl -o /tmp/ambari-shell.jar https://s3-eu-west-1.amazonaws.com/maven.sequenceiq.com/releases/com/sequenceiq/ambari-shell/0.1.25/ambari-shell-0.1.25.jar
+RUN curl -o /tmp/ambari-shell.jar http://10.0.83.123/ambari-shell/ambari-shell-0.1.31.jar
 ADD shell/install-cluster.sh /tmp/
 ADD shell/wait-for-host-number.sh /tmp/
 ADD shell/ambari-shell.sh /tmp/
