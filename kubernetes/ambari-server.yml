@@ -19,7 +19,7 @@ spec:
       - name: ambari-server
         securityContext:
           privileged: true
-        image: hortonworks/ambari-server:2.2.1-v20
+        image: a.b.cn:5000/hortonworks/ambari-server:2.5.1.0
         volumeMounts:
             - name: ambari-conf
               mountPath: /etc/systemd/system/ambari-server.service.d
@@ -32,7 +32,6 @@ spec:
             value: ambari-server.ambari.svc.cluster.local
           - name: AMBARI_HOST
             value: ambari-server.ambari.svc.cluster.local
-
         ports:
         - containerPort: 8080
       volumes:

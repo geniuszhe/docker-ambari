@@ -13,8 +13,7 @@ ENV HADOOP_CLASSPATH /data/jars/*:/usr/lib/hadoop/lib/*
 
 ADD public-hostname.sh /etc/ambari-agent/conf/public-hostname.sh
 ADD internal-hostname.sh /etc/ambari-agent/conf/internal-hostname.sh
-RUN sed -i "/\[agent\]/ a public_hostname_script=
-\/etc\/ambari-agent\/conf\/public-hostname.sh" /etc/ambari-agent/conf/ambari-agent.ini
+RUN sed -i "/\[agent\]/ a public_hostname_script=\/etc\/ambari-agent\/conf\/public-hostname.sh" /etc/ambari-agent/conf/ambari-agent.ini
 RUN sed -i "/\[agent\]/ a hostname_script=\/etc\/ambari-agent\/conf\/internal-hostname.sh" /etc/ambari-agent/conf/ambari-agent.ini
 
 # do not use the docker0 interface
