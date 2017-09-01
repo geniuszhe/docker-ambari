@@ -19,7 +19,7 @@ spec:
       - name: ambari-server
         securityContext:
           privileged: true
-        image: a.b.cn:5000/hortonworks/ambari-server:2.5.1.0
+        image: a.b.cn:5000/casbigdatalab/ambari-server:2.5.1.0
         volumeMounts:
             - name: ambari-conf
               mountPath: /etc/systemd/system/ambari-server.service.d

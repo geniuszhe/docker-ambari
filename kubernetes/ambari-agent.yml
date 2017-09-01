@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: amb-agent
-        image: a.b.cn:5000/hortonworks/ambari-agent:2.5.1.0
+        image: a.b.cn:5000/casbigdatalab/ambari-agent:2.5.1.0
         securityContext:
           privileged: true
         resources:

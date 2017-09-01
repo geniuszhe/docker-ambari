@@ -1,5 +1,5 @@
 FROM centos:7
-MAINTAINER Hortonworks
+MAINTAINER casbigdatalab
 
 RUN yum install epel-release -y && yum clean all
 RUN yum update -y && yum clean all
@@ -14,8 +14,9 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
-VOLUME [ "/sys/fs/cgroup" ]
-ENTRYPOINT ["/usr/sbin/init"]
+#VOLUME [ "/sys/fs/cgroup" ]
+#ENTRYPOINT ["/usr/sbin/init"]
+CMD [ "sh", "-c", "while true; do sleep 60; done" ]
 
 RUN yum install -y systemd* && yum clean all
 
@@ -36,7 +37,7 @@ RUN curl -o /usr/bin/jq http://stedolan.github.io/jq/download/linux64/jq && chmo
 ENV JDK_ARTIFACT jdk-8u112-linux-x64.tar.gz
 ENV JDK_VERSION jdk1.8.0_112
 
-# install Ambari specified 1.7 jdk
+# install Ambari specified 1.8 jdk
 RUN mkdir /usr/jdk64 && cd /usr/jdk64 && wget http://public-repo-1.hortonworks.com/ARTIFACTS/$JDK_ARTIFACT && \
     tar -xf $JDK_ARTIFACT && rm -f $JDK_ARTIFACT
 ENV JAVA_HOME /usr/jdk64/$JDK_VERSION

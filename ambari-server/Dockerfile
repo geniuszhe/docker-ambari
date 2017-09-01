@@ -1,4 +1,4 @@
-FROM hortonworks/ambari-base:7.2-v7
+FROM casbigdatalab/ambari-base:7
 MAINTAINER Hortonworks
 
 # add ambari repo
@@ -12,7 +12,9 @@ RUN curl -o /tmp/ambari-shell.jar http://10.0.83.123/ambari-shell/ambari-shell-0
 ADD shell/install-cluster.sh /tmp/
 ADD shell/wait-for-host-number.sh /tmp/
 ADD shell/ambari-shell.sh /tmp/
-
+RUN chmod u+x /tmp/install-cluster.sh
+RUN chmod u+x /tmp/wait-for-host-number.sh
+RUN chmod u+x /tmp/ambari-shell.sh
 ENV PLUGIN_PATH /plugins
 WORKDIR /tmp
 
@@ -28,4 +30,5 @@ RUN systemctl enable ambari-server
 
 RUN echo DefaultEnvironment=\"JAVA_HOME=$JAVA_HOME\" >> /etc/systemd/system.conf
 
+CMD [ "sh", "-c", "service ambari-server start" ]
 EXPOSE 8080

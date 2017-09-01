@@ -1,4 +1,4 @@
-FROM hortonworks/ambari-base:7.2-v7
+FROM casbigdatalab/ambari-base:7
 MAINTAINER Hortonworks
 
 # add ambari repo
@@ -31,3 +31,5 @@ ADD init/ambari-agent.service /etc/systemd/system/ambari-agent.service
 RUN systemctl enable ambari-agent
 
 RUN echo DefaultEnvironment=\"JAVA_HOME=$JAVA_HOME\" \"HADOOP_CLASSPATH=$HADOOP_CLASSPATH\" >> /etc/systemd/system.conf
+
+CMD [ "sh", "-c", "ambari-agent start" ]
