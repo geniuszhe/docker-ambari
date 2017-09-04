@@ -49,9 +49,28 @@
       "cardinality" : "1"
     }
   ],
+    "settings" : [
+    "deployment_settings": [
+      {"skip_failure":"true"}
+    ],
+    "repository_settings":[
+      {
+        "override_strategy":"ALWAYS_APPLY",
+        "operating_system":"redhat7",
+        "repo_id":"HDP",
+        "base_url":"http://10.0.83.123/HDP/2.x/updates/2.6.1.0/"
+      },
+      {
+        "override_strategy":"APPLY_WHEN_MISSING",
+        "operating_system":"redhat7",
+        "repo_id":"HDP-UTIL-1.1",
+        "base_url":"http://10.0.83.123/HDP-UTILS-1.1.0.21/repos/centos7/"
+      }
+    ]
+  ],
   "Blueprints" : {
     "blueprint_name" : "single-node-hdfs-yarn",
     "stack_name" : "HDP",
-    "stack_version" : "2.3"
+    "stack_version" : "2.6"
   }
 }
