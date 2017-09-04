@@ -30,5 +30,5 @@ RUN systemctl enable ambari-server
 
 RUN echo DefaultEnvironment=\"JAVA_HOME=$JAVA_HOME\" >> /etc/systemd/system.conf
 
-CMD [ "sh", "-c", "service ambari-server start" ]
+CMD [ "sh", "-c", "ambari-server start" ]
 EXPOSE 8080
