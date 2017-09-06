@@ -32,4 +32,6 @@ RUN systemctl enable ambari-agent
 
 RUN echo DefaultEnvironment=\"JAVA_HOME=$JAVA_HOME\" \"HADOOP_CLASSPATH=$HADOOP_CLASSPATH\" >> /etc/systemd/system.conf
 
+RUN echo bigdata | passwd root --stdin
+
 CMD [ "sh", "-c", "ambari-agent start" ]

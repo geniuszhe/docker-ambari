@@ -5,16 +5,21 @@ MAINTAINER Hortonworks
 ADD ambari.repo /etc/yum.repos.d/
 
 # initscripts (service wrapper for servicectl) is need othewise the Ambari is unable to start postgresql
-RUN yum install -y ambari-server && yum clean all
+RUN yum install -y ambari-server
+RUN yum install -y python-psycopg2
+RUN yum install -y expect
 
 # add ambari shell to the image so new users don't need the 1GB java image
 RUN curl -o /tmp/ambari-shell.jar http://10.0.83.123/ambari-shell/ambari-shell-0.1.31.jar
 ADD shell/install-cluster.sh /tmp/
 ADD shell/wait-for-host-number.sh /tmp/
 ADD shell/ambari-shell.sh /tmp/
+ADD shell/hosts_gen.py /tmp/hosts_gen.py
+ADD shell/hosts /etc/hosts
 RUN chmod u+x /tmp/install-cluster.sh
 RUN chmod u+x /tmp/wait-for-host-number.sh
 RUN chmod u+x /tmp/ambari-shell.sh
+RUN chmod u+x /tmp/hosts_gen.py
 ENV PLUGIN_PATH /plugins
 WORKDIR /tmp
 
