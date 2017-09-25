@@ -2,6 +2,7 @@
 
 import psycopg2
 import os
+import socket
 conn = psycopg2.connect(database="ambari", user="ambari", password="bigdata", host="localhost", port="5432")
 
 print "Opened database successfully"
@@ -12,6 +13,7 @@ cur.execute("select public_host_name,ipv4 from hosts")
 rows = cur.fetchall()
 host_file = "/etc/hosts"
 data=""
+'''
 with open(host_file, 'rb') as f:
     data = f.read()
     array = data.split("\n")
@@ -23,9 +25,15 @@ with open(host_file, 'rb') as f:
         data = "\n".join(array)
     except Exception as err:
        print err
+'''
 with open(host_file,"w") as f:
     f.write(data)
+    f.write("127.0.0.1	localhost\n")
+    f.write("::1	localhost ip6-localhost ip6-loopback\n")
     f.write("# hosts begin\n")
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+    f.write( ip+ " " + hostname +"\n")
     for row in rows:
        f.write(row[1] + " " + row[0] + "\n")
     f.write("# hosts end\n")

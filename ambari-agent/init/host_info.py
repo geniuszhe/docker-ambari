@@ -83,9 +83,9 @@ class HostInfo():
 
     result = {
       'cpu_num': int(cpu_count),
-      'cpu_user': metrics['cpu/usage_rate'] if metrics['cpu/usage_rate'] else 0,
+      'cpu_user': int(metrics['cpu/usage_rate']) if metrics['cpu/usage_rate'] else 0,
       'cpu_system': 0,
-      'cpu_idle': 100 - metrics['cpu/usage_rate'] if metrics['cpu/usage_rate'] else 0,
+      'cpu_idle': 100 - int(metrics['cpu/usage_rate']) if metrics['cpu/usage_rate'] else 0,
       'cpu_nice': 0,
       'cpu_wio':  0,
       'cpu_intr': 0,

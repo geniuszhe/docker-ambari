@@ -15,7 +15,6 @@ ADD shell/install-cluster.sh /tmp/
 ADD shell/wait-for-host-number.sh /tmp/
 ADD shell/ambari-shell.sh /tmp/
 ADD shell/hosts_gen.py /tmp/hosts_gen.py
-ADD shell/hosts /etc/hosts
 RUN chmod u+x /tmp/install-cluster.sh
 RUN chmod u+x /tmp/wait-for-host-number.sh
 RUN chmod u+x /tmp/ambari-shell.sh
