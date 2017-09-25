@@ -4,7 +4,7 @@ MAINTAINER Hortonworks
 # add ambari repo
 ADD ambari.repo /etc/yum.repos.d/
 
-RUN yum install -y  ambari-agent && yum clean all
+RUN yum install -y  ambari-agent && yum install -y ambari-metrics-monitor && yum clean all
 RUN find /etc/rc.d/rc* -name "*ambari-agent" | xargs rm -rf
 
 # add a custom folder to the hadoop classpath
@@ -27,6 +27,10 @@ ADD init/init-agent.sh /opt/ambari-agent/init-agent.sh
 RUN chmod u+x /opt/ambari-agent/init-agent.sh
 
 ADD init/ambari-agent.service /etc/systemd/system/ambari-agent.service
+ADD init/host_info.py /opt/ambari-agent/host_info.py
+RUN cp -rf /opt/ambari-agent/host_info.py /usr/lib/python2.6/site-packages/resource_monitoring/core/
+ADD init/Facter.py /opt/ambari-agent/Facter.py
+RUN cp -rf /opt/ambari-agent/Facter.py /usr/lib/python2.6/site-packages/ambari_agent/
 
 RUN systemctl enable ambari-agent
 
