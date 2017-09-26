@@ -73,19 +73,20 @@ class HostInfo():
     """
     cpu_times = psutil.cpu_times_percent()
     metrics = ['cpu/limit', 'cpu/usage_rate']
-    metrics_dict = self.get_heapster_metrics(metrics)
-    cpu_count = metrics_dict['cpu/limit']
+    metrics_limit = self.get_heapster_metrics(['cpu/limit'])
+    cpu_count = metrics_limit['cpu/limit']
+    metrics_rate = self.get_heapster_metrics([ 'cpu/usage_rate'])
+    cpu_rate = 100 * metrics_rate['cpu/usage_rate'] / metrics_limit['cpu/limit']
     if cpu_count>=1000:
       cpu_count = cpu_count/1000
     # Since only boot time which is a part of static info is not sent with
     # other payload sending it with cpu stats.
     boot_time = self.__host_static_info.get('boottime')
-
     result = {
       'cpu_num': int(cpu_count),
-      'cpu_user': int(metrics['cpu/usage_rate']) if metrics['cpu/usage_rate'] else 0,
+      'cpu_user': cpu_rate,
       'cpu_system': 0,
-      'cpu_idle': 100 - int(metrics['cpu/usage_rate']) if metrics['cpu/usage_rate'] else 0,
+      'cpu_idle': 100 - cpu_rate,
       'cpu_nice': 0,
       'cpu_wio':  0,
       'cpu_intr': 0,
@@ -141,13 +142,14 @@ class HostInfo():
     #mem_total = self.__host_static_info.get('mem_total')
     #swap_total = self.__host_static_info.get('swap_total')
     metrics = ['memory/limit','memory/usage']
-    metrics_dict = self.get_heapster_metrics(metrics)
+    metrics_limit = self.get_heapster_metrics(['memory/limit'])
+    metrics_usage = self.get_heapster_metrics([ 'memory/usage'])
     bytes2kilobytes = lambda x: x / 1000
 
     return {
-      'mem_total': bytes2kilobytes(metrics['memory/limit']) if metrics['memory/limit'] else 0,
-      'mem_used': bytes2kilobytes(metrics['memory/usage']) if metrics['memory/usage'] else 0, # Used memory w/o cached
-      'mem_free': bytes2kilobytes(metrics['memory/limit'] - metrics['memory/usage']) if metrics['memory/limit'] - metrics['memory/usage'] else 0, # the actual amount of available memory
+      'mem_total': bytes2kilobytes(metrics_limit['memory/limit']),
+      'mem_used': bytes2kilobytes(metrics_usage['memory/usage']), # Used memory w/o cached
+      'mem_free': bytes2kilobytes(metrics_limit['memory/limit'] - metrics_usage['memory/usage']), # the actual amount of available memory
       'mem_shared':  0,
       'mem_buffered': 0,
       'mem_cached': 0,
